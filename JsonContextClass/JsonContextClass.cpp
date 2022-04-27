@@ -4,11 +4,11 @@
 #include "JsonContextClass.h"
 
 using namespace std;
-using namespace Context;
+//using namespace Context;
 
 int main()
 {
-	Value IntVal;
+	Context::Value<int> IntVal;
 
 	IntVal = 10;
 

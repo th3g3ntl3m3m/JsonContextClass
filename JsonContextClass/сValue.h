@@ -2,18 +2,21 @@
 
 namespace Context
 {
+	template<class T>
 	class Value
 	{
 	public:
 		Value();
 		~Value();
 
-		Value& operator= (int val);
-		friend std::ostream& operator<< (std::ostream& out, const Value& val);
+		Value<T>& operator= (T val);
+
+		template<class T>
+		friend std::ostream& operator<< (std::ostream& out, const Value<T>& val);
 
 	private:
-		int data;
+		T data;
 	};
-}
 
-#include "cValue.inl"
+	#include "cValue.inl"
+}
