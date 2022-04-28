@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-	json_tools::cContext Val(1);
+	json_tools::cContext Val;
 
 	Val.SetInt(10);
 	std::cout << "Int single Val " << Val.GetInt() << std::endl;

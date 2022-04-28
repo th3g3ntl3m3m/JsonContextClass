@@ -68,6 +68,12 @@ namespace json_tools
 			return InternalData.Codes.Code == 3;
 		}
 
+		bool IsInt() { return (InternalData.Codes.Code & 1) != 0 };
+		bool IsDouble() { return (InternalData.Codes.Code & 2) != 0 };
+		bool IsBool() { return (InternalData.Codes.Code & 3 || InternalData.Codes.Code & 4) != 0 };
+		bool IsTrue() { return InternalData.Codes.Code == 3 };
+		bool IsFalse() { return InternalData.Codes.Code == 4 };
+
 	private:
 
 		struct String
