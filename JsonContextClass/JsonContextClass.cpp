@@ -5,8 +5,11 @@
 
 using namespace json_tools;
 
+#define SIMPLE_DEMO 0
+
 int main()
 {
+#if SIMPLE_DEMO
 	json_tools::cContext Val;
 
 	Val.SetInt(10);
@@ -68,8 +71,91 @@ int main()
 	std::cout << ValCell.GetInt() << " " << ValArray.GetArraySize() << std::endl;
 
 	//======================================================================
+#else
+	/*
+	* Let's try to create a structure based on json
+	* 
+	* Json example:
+	* 
+	*	{
+	*		"int_val": 1,
+	*		"double_val": 0.01,
+	*		"bool_val": false,
+	*		"string_val": "Val in object!",
+	*		"array_val": [
+	*			1,
+	*			0.1,
+	*			false,
+	*			"Val in object",
+	*			{
+	*				"int_val": 1,
+	*				"double_val": 0.01,
+	*				"bool_val": false,
+	*				"string_val": "Val in object!",
+	*				"array_val": [1,2,3,4,5,6,7,8,9,10]
+	*			}
+	*		]
+	*	}
+	* 
+	*/
 
+	cContext GlobalObj;
 
+	cContext ScalarType;
+	cContext LocArray;
+	cContext LocObj;
 
+	GlobalObj.SetObject();
+
+	ScalarType.SetInt(1);
+	GlobalObj.AddMember("int_val", ScalarType);
+	ScalarType.SetDouble(0.01);
+	GlobalObj.AddMember("double_val", ScalarType);
+	ScalarType.SetBool(false);
+	GlobalObj.AddMember("bool_val", ScalarType);
+	ScalarType.SetString("Val in object!");
+	GlobalObj.AddMember("string_val", ScalarType);
+
+	LocArray.SetArray();
+
+	ScalarType.SetInt(1);
+	LocArray.PushBack(ScalarType);
+	ScalarType.SetDouble(0.01);
+	LocArray.PushBack(ScalarType);
+	ScalarType.SetBool(false);
+	LocArray.PushBack(ScalarType);
+	ScalarType.SetString("Val in object!");
+	LocArray.PushBack(ScalarType);
+
+	LocObj.SetObject();
+	
+	ScalarType.SetInt(1);
+	LocObj.AddMember("int_val", ScalarType);
+	ScalarType.SetDouble(0.01);
+	LocObj.AddMember("double_val", ScalarType);
+	ScalarType.SetBool(false);
+	LocObj.AddMember("bool_val", ScalarType);
+	ScalarType.SetString("Val in object!");
+	LocObj.AddMember("string_val", ScalarType);
+	
+	cContext LocArrayLvlObj;
+
+	LocArrayLvlObj.SetArray();
+	
+	int ValInt = 0;
+
+	for (int i = 0; i < 11; i++)
+	{
+		ScalarType.SetInt(ValInt);
+		LocArrayLvlObj.PushBack(ScalarType);
+		ValInt += 1;
+	}
+
+	LocObj.AddMember("array_val", LocArrayLvlObj);
+
+	LocArray.PushBack(LocObj);
+
+	GlobalObj.AddMember("array_val", LocArray);
+#endif
 	return 0;
 }

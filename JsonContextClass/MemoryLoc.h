@@ -39,6 +39,10 @@ namespace json_tools
 	class PoolLocateMemory
 	{
 	public:
+		static const bool IsNeedFree = false;
+
+		PoolLocateMemory(size_t PoolSize = DefCellSize, Locator* BaceLocator = 0) {}
+
 
 	private:
 
@@ -56,5 +60,5 @@ namespace json_tools
 		CLocateWrapper* OwnDefLocator;
 
 		static const int DefCellSize = 64 * 1024;
-	}
+	};
 }
